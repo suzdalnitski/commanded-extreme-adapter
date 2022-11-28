@@ -39,6 +39,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.Mixfile do
     [
       {:commanded, "~> 1.2"},
       {:extreme, "~> 0.13"},
+      {:elixir_uuid, "~> 1.2.1"},
 
       # Optional dependencies
       {:jason, "~> 1.2", optional: true},
