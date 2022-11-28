@@ -14,7 +14,7 @@ defmodule Commanded.ExtremeTestCase do
       Keyword.merge(
         [
           serializer: Commanded.Serialization.JsonSerializer,
-          stream_prefix: "commandedtest" <> UUID.uuid4(:hex),
+          stream_prefix: "commandedtest" <> ElixirUUID.uuid4(:hex),
           extreme: [
             db_type: :node,
             host: "localhost",

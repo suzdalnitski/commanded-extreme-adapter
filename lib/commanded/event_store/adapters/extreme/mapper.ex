@@ -41,7 +41,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.Mapper do
     {correlation_id, metadata} = Map.pop(metadata, "$correlationId")
 
     %RecordedEvent{
-      event_id: UUID.binary_to_string!(event_id),
+      event_id: ElixirUUID.binary_to_string!(event_id),
       event_number: event_number,
       stream_id: to_stream_id(event),
       stream_version: stream_version + 1,

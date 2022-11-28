@@ -17,7 +17,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.SubscriptionsTest do
     setup [:append_events_to_stream]
 
     test "subscribe to `$all` stream", %{server: server} do
-      name = "test-subscription-#{UUID.uuid4()}"
+      name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = create_persistent_subscription(server, name, "$all")
 
@@ -47,7 +47,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.SubscriptionsTest do
   defp append_events_to_stream(context) do
     %{server: server} = context
 
-    stream_id = UUID.uuid4()
+    stream_id = ElixirUUID.uuid4()
 
     :ok = write_events(server, stream_id)
 
@@ -58,7 +58,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.SubscriptionsTest do
     events =
       Enum.map(1..3, fn event_number ->
         ExMsg.NewEvent.new(
-          event_id: UUID.uuid4() |> UUID.string_to_binary!(),
+          event_id: ElixirUUID.uuid4() |> ElixirUUID.string_to_binary!(),
           event_type: "test-event",
           data_content_type: 0,
           metadata_content_type: 0,

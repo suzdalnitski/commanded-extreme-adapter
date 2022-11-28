@@ -409,7 +409,7 @@ defmodule Commanded.EventStore.Adapters.Extreme do
           |> add_correlation_id(event.correlation_id)
 
         ExMsg.NewEvent.new(
-          event_id: UUID.uuid4(:raw),
+          event_id: ElixirUUID.uuid4(:raw),
           event_type: event.event_type,
           data_content_type: 0,
           metadata_content_type: 0,

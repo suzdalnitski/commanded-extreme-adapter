@@ -21,7 +21,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
     end
 
     test "subscribe to stream", %{server: server, stream_id: stream_id} do
-      name = "test-subscription-#{UUID.uuid4()}"
+      name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = create_persistent_subscription(server, name, stream_id)
       {:ok, subscription} = connect_to_persistent_subscription(server, name, stream_id)
@@ -49,10 +49,10 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
 
   describe "category subscription" do
     test "should receive events", %{server: server} do
-      stream_prefix = "test" <> UUID.uuid4(:hex)
-      stream_id = stream_prefix <> "-" <> UUID.uuid4()
+      stream_prefix = "test" <> ElixirUUID.uuid4(:hex)
+      stream_id = stream_prefix <> "-" <> ElixirUUID.uuid4()
       category_stream = "$ce-" <> stream_prefix
-      subscription_name = "test-subscription-#{UUID.uuid4()}"
+      subscription_name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = write_events(server, stream_id)
 
@@ -88,10 +88,10 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
     end
 
     test "should not receive events from deleted stream", %{config: config, server: server} do
-      stream_prefix = "test" <> UUID.uuid4(:hex)
-      stream_id = stream_prefix <> "-" <> UUID.uuid4()
+      stream_prefix = "test" <> ElixirUUID.uuid4(:hex)
+      stream_id = stream_prefix <> "-" <> ElixirUUID.uuid4()
       category_stream = "$ce-" <> stream_prefix
-      subscription_name = "test-subscription-#{UUID.uuid4()}"
+      subscription_name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = write_events(server, stream_id)
       :ok = soft_delete_stream(server, stream_id, 2)
@@ -162,7 +162,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
          %{server: server, stream_id: stream_id} do
       :ok = soft_delete_stream(server, stream_id, 2)
 
-      name = "test-subscription-#{UUID.uuid4()}"
+      name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = create_persistent_subscription(server, name, stream_id)
       {:ok, _subscription} = connect_to_persistent_subscription(server, name, stream_id)
@@ -171,7 +171,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
     end
 
     test "resume persistent subscription", %{server: server, stream_id: stream_id} do
-      name = "test-subscription-#{UUID.uuid4()}"
+      name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = create_persistent_subscription(server, name, stream_id)
       {:ok, subscription} = connect_to_persistent_subscription(server, name, stream_id)
@@ -216,7 +216,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
          %{server: server, stream_id: stream_id} do
       :ok = hard_delete_stream(server, stream_id, 2)
 
-      name = "test-subscription-#{UUID.uuid4()}"
+      name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = create_persistent_subscription(server, name, stream_id)
       {:ok, _subscription} = connect_to_persistent_subscription(server, name, stream_id)
@@ -225,7 +225,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
     end
 
     test "resume persistent subscription", %{server: server, stream_id: stream_id} do
-      name = "test-subscription-#{UUID.uuid4()}"
+      name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = create_persistent_subscription(server, name, stream_id)
       {:ok, subscription} = connect_to_persistent_subscription(server, name, stream_id)
@@ -283,7 +283,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
       :ok = hard_delete_stream(server, stream_id, 2)
       :ok = scavenge(config)
 
-      name = "test-subscription-#{UUID.uuid4()}"
+      name = "test-subscription-#{ElixirUUID.uuid4()}"
 
       :ok = create_persistent_subscription(server, name, stream_id)
       {:ok, _subscription} = connect_to_persistent_subscription(server, name, stream_id)
@@ -296,7 +296,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
       :ok = hard_delete_stream(server, stream_id, 2)
       :ok = scavenge(config)
 
-      subscription_name = "test-subscription-#{UUID.uuid4()}"
+      subscription_name = "test-subscription-#{ElixirUUID.uuid4()}"
       category_stream = "$ce-test"
 
       :ok = create_persistent_subscription(server, subscription_name, category_stream)
@@ -311,7 +311,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
   defp write_events(context) do
     %{server: server} = context
 
-    stream_id = UUID.uuid4()
+    stream_id = ElixirUUID.uuid4()
 
     :ok = write_events(server, stream_id)
 
@@ -322,7 +322,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.DeleteStreamTest do
     events =
       Enum.map(1..3, fn event_number ->
         ExMsg.NewEvent.new(
-          event_id: UUID.uuid4() |> UUID.string_to_binary!(),
+          event_id: ElixirUUID.uuid4() |> ElixirUUID.string_to_binary!(),
           event_type: "test-event",
           data_content_type: 0,
           metadata_content_type: 0,

@@ -7,7 +7,7 @@ defmodule Commanded.EventStore.Adapters.Extreme.EventStorePrefixTest do
   def start_event_store(config) do
     config =
       Keyword.update!(config, :prefix, fn prefix ->
-        "commandedtest" <> prefix <> UUID.uuid4(:hex)
+        "commandedtest" <> prefix <> ElixirUUID.uuid4(:hex)
       end)
 
     ExtremeTestCase.start_event_store(config)
